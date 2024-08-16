@@ -21,7 +21,7 @@ function Main() {
                     <div>
                         upperside
                     </div>
-                    <SearchBoxox />
+                    <SearchBox />
                     <div>
                         Bottom
                     </div>
