@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import SearchBox from './../component/mainSection/SearchBox';
+import Clock from './../component/mainSection/Clock';
 
 
 function Main() {
@@ -21,6 +22,7 @@ function Main() {
                     <div>
                         upperside
                     </div>
+                    <Clock />
                     <SearchBox />
                     <div>
                         Bottom
