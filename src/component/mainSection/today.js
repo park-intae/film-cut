@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { dateFormat } from "./DateUtil";
 
 const Today = () => {
     const [date, setDate] = useState(new Date());
@@ -11,10 +12,7 @@ const Today = () => {
         return () => clearInterval(time);
     }, []);
 
-    //date
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
+    const {year, month, day} = dateFormat(date);
 
     return (
         <div>

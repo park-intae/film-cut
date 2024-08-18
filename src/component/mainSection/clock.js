@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { timeFormat } from "./DateUtil";
 
 const Clock = () => {
     const [date, setDate] = useState(new Date());
@@ -11,15 +12,12 @@ const Clock = () => {
         return () => clearInterval(timer);
     }, []);
 
-    // 시, 분, 초 2자리로 포맷팅
-    const hour = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');
+    const { hour, minu, sec } = timeFormat(date);
 
     return (
         <div>
             <div>
-                {hour}:{minutes}:{seconds}
+                {hour}:{minu}:{sec}
             </div>
         </div>
     );
