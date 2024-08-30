@@ -1,36 +1,83 @@
-import { useEffect } from "react";
-import { dateFormat, timeFormat } from "./DateUtil";
-import LatlonToXY from './LatlonToXY';
+import React, { useState , useEffect } from "react";
+import { timeFormat, dateFormat } from "./util/DateUtil";
+import { CoordConverter } from './util/CoordCoverter';
 
-const API_KEY = process.env.REACT_APP_API_KEY;
-const time = timeFormat(date) - 30;
-const date = dateFormat(date); 
-// time,date 나중에 네 자리,여덟자리 숫자로 표기되도록 바꿔야됨
-const URL = 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst';
-const {x , y} = LatlonToXY();
+function Weather() {
+    const [date, setDate] = useState(new Date());
+    const [latitude, setLatitude] = useState(null);
+    const [longitude, setLongitude] = useState(null);
+    const [weather, setWeather] = useState(null);
+    const [error, setError] = useState(null);
 
-useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-        let lat = position.coords.latitude;
-        let lon = position.coords.longitude;
-        getWeather(lat, lon);
-    });
-},[]);
+    const { year, month, day } = dateFormat(date);
+    const { hour, minu, sec } = timeFormat(date);
 
-const getWeather = async(lat,lon) => {
-    try{
-        const res = await axios.get(URL, {
-            param: {
-                serviceKey : 'p4KFG0gAnkZNNQO2J1dVvJNqJmVaPA7X2e3ro1jntb%2BMXHiYnbxUar6QenJ6eW5NfZkWoGUCt3vIxOBaOzHCFQ%3D%3D',
-                pageNo : '1',
-                base_date : {date},
-                base_time : {time},
-                nx : {},
-                ny : {},
-            }
+    useEffect(() => {
+        const time = setInterval(() => {
+            setDate(new Date());
+        }, 1000);
+
+        return () => clearInterval(time);
+    }, []);
+
+    // 위치 가져오기
+    useEffect(() => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    setLatitude(position.coords.latitude);
+                    setLongitude(position.coords.longitude);
+                },
+                (error) => {
+                    setError("위치를 가져올 수 없습니다.");
+                }
+            );
+        } else {
+            setError("Geolocation이 지원되지 않습니다.");
         }
-        )
-    } catch (err) {
-        console.error(err);
-    }
+    }, []);
+
+    //API호출
+    useEffect(() => {
+        if(latitude && longitude){
+            const fetchWeather = async () => {
+                const serviceKey = process.env.REACT_APP_OPEN_DATA_API_KEY;
+                const { nx, ny } = CoordConverter(longitude, latitude);
+                const baseDate = `${year}${month}${day}`;
+                const baseTime = `${hour}${minu}${sec}`; 
+                const numOfRows = 10;
+                const url = `http://apis.data.go.kr/1360000/VilageFcstInfoService/getVilageFcst?serviceKey=${serviceKey}&numOfRows=${numOfRows}&pageNo=1&base_date=${baseDate}&base_time=${baseTime}&nx=${nx}&ny=${ny}&dataType=json`;
+            
+                try{
+                    const response = await fetch(url);
+                    const data = await response.json();
+                    setWeather(data.response.body.items.item);
+                } catch (error) {
+                    setError("날씨정보를 가져올 수 없습니다.")
+                }
+            };
+
+            fetchWeather();
+        }
+    }, [latitude, longitude]);
+
+    return(
+        <div>
+            <h1>날씨</h1>
+            {error && <p>{error}</p>}
+            {weather ? (
+                <div>
+                    {weather.map((item, index) => (
+                        <div key={index}>
+                            <p>{item.category}: {item.fcstValue}</p>
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <p>데이터 로딩</p>
+            )}
+        </div>
+    )
 }
+
+export default Weather;

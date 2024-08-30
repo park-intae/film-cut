@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { dateFormat } from "./DateUtil";
+import { dateFormat } from "./util/DateUtil";
+import Weather from "./Weather";
 
 const Today = () => {
     const [date, setDate] = useState(new Date());
@@ -18,6 +19,9 @@ const Today = () => {
         <div>
             <div>
                 {year}년 {month}월 {day}일
+            </div>
+            <div>
+                <Weather/>
             </div>
         </div>
     )
