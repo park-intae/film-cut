@@ -1,83 +1,58 @@
-import React, { useState , useEffect } from "react";
-import { timeFormat, dateFormat } from "./util/DateUtil";
-import { CoordConverter } from './util/CoordCoverter';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import weatherDescKo from './util/weatherDescKo';
 
 function Weather() {
-    const [date, setDate] = useState(new Date());
-    const [latitude, setLatitude] = useState(null);
-    const [longitude, setLongitude] = useState(null);
-    const [weather, setWeather] = useState(null);
-    const [error, setError] = useState(null);
+  const API_KEY = process.env.REACT_APP_OPEN_WEATHER_API_KEY;
+  const [ weather, setWeather] = useState(null);
 
-    const { year, month, day } = dateFormat(date);
-    const { hour, minu, sec } = timeFormat(date);
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      let lat = position.coords.latitude;
+      let lon = position.coords.longitude;
+      getWeather(lat, lon);
+    });
+  }, []);
+  
+  const getWeather = async(lat, lon) => {
+    try {
+      const res = await axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
+      );
+ 
+      const cityName = res.data.name;
+      // id 찾아서 매칭 후 description 한글 번역된 거 가져오기
+      const weatherId = res.data.weather[0].id;
+      const weatherKo = weatherDescKo[weatherId];
+      // 날씨 아이콘 가져오기
+      const weatherIcon = res.data.weather[0].icon;
+      const weatherIconAdrs = `http://openweathermap.org/img/wn/${weatherIcon}@2x.png`;
+      // 소수점 버리기
+      const temp = Math.round(res.data.main.temp);
+ 
+      setWeather({
+        description: weatherKo,
+        name: cityName,
+        temp: temp,
+        icon: weatherIconAdrs,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-    useEffect(() => {
-        const time = setInterval(() => {
-            setDate(new Date());
-        }, 1000);
-
-        return () => clearInterval(time);
-    }, []);
-
-    // 위치 가져오기
-    useEffect(() => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    setLatitude(position.coords.latitude);
-                    setLongitude(position.coords.longitude);
-                },
-                (error) => {
-                    setError("위치를 가져올 수 없습니다.");
-                }
-            );
-        } else {
-            setError("Geolocation이 지원되지 않습니다.");
-        }
-    }, []);
-
-    //API호출
-    useEffect(() => {
-        if(latitude && longitude){
-            const fetchWeather = async () => {
-                const serviceKey = process.env.REACT_APP_OPEN_DATA_API_KEY;
-                const { nx, ny } = CoordConverter(longitude, latitude);
-                const baseDate = `${year}${month}${day}`;
-                const baseTime = `${hour}${minu}${sec}`; 
-                const numOfRows = 10;
-                const url = `http://apis.data.go.kr/1360000/VilageFcstInfoService/getVilageFcst?serviceKey=${serviceKey}&numOfRows=${numOfRows}&pageNo=1&base_date=${baseDate}&base_time=${baseTime}&nx=${nx}&ny=${ny}&dataType=json`;
-            
-                try{
-                    const response = await fetch(url);
-                    const data = await response.json();
-                    setWeather(data.response.body.items.item);
-                } catch (error) {
-                    setError("날씨정보를 가져올 수 없습니다.")
-                }
-            };
-
-            fetchWeather();
-        }
-    }, [latitude, longitude]);
-
-    return(
+  return(
+    <div>
+      {weather && (
         <div>
-            <h1>날씨</h1>
-            {error && <p>{error}</p>}
-            {weather ? (
-                <div>
-                    {weather.map((item, index) => (
-                        <div key={index}>
-                            <p>{item.category}: {item.fcstValue}</p>
-                        </div>
-                    ))}
-                </div>
-            ) : (
-                <p>데이터 로딩</p>
-            )}
+          <h2>{weather.name}</h2>
+          <p>{weather.description}</p>
+          <p>{weather.temp}°C</p>
+          <img src={weather.icon} alt="weather icon" />
         </div>
-    )
+      )}
+    </div>
+  );
 }
 
 export default Weather;
