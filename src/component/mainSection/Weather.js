@@ -26,6 +26,7 @@ function Weather() {
           description: weatherKo,
           name: cityName,
           temp: temp,
+          
           icon: weatherIconAdrs,
         });
       } catch (err) {
