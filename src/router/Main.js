@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import SearchBox from './../component/mainSection/SearchBox';
 import Clock from '../component/mainSection/Clock';
 import Today from "../component/mainSection/Today";
+import Memo from './../component/bottom/Memo/Memo';
 
 
 function Main() {
@@ -21,13 +22,13 @@ function Main() {
             ) : (
                 <div>
                     <div>
-                        upperside
+                        upperSide
                     </div>
                     <Clock />
                     <Today />
                     <SearchBox />
                     <div>
-                        Bottom
+                        <Memo />
                     </div>
                 </div>
         )}
