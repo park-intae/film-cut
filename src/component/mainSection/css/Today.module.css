@@ -1,0 +1,13 @@
+.mainSection{
+    margin: auto;
+    background-color: aqua;
+    border: solid black 2px;
+    width: 80%;
+}
+
+.date{
+    margin: auto;
+    margin-bottom: -0.8em;
+    width: max-content;
+    font: 3em sans-serif;
+}

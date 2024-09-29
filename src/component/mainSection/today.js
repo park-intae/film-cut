@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { dateFormat } from "./util/DateUtil";
 import Weather from "./Weather";
+import Clock from './Clock';
+import styles from './css/Today.module.css';
 
 const Today = () => {
     const [date, setDate] = useState(new Date());
@@ -16,10 +18,11 @@ const Today = () => {
     const {year, month, day} = dateFormat(date);
 
     return (
-        <div>
-            <div>
+        <div className={styles.mainSection}>
+            <div className={styles.date}>
                 {year}년 {month}월 {day}일
             </div>
+            <Clock/>
             <div>
                 <Weather/>
             </div>

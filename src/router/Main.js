@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import SearchBox from './../component/mainSection/SearchBox';
-import Clock from '../component/mainSection/Clock';
 import Today from "../component/mainSection/Today";
 import Memo from '../component/bottom/Memo.js';
 import TodoList from "../component/bottom/TodoList.js";
@@ -27,11 +26,9 @@ function Main() {
                         <GoogleAuthLogin />
                     </div>
                     <hr/>
-                    <Clock />
+                    <SearchBox />
                     <hr/>
                     <Today />
-                    <hr/>
-                    <SearchBox />
                     <hr/>
                     <div>
                         <Memo />

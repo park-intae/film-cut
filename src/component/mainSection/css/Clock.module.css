@@ -1,3 +1,5 @@
 .clock{
-    
+    margin: auto;
+    width: max-content;
+    font: 8em sans-serif;
 }

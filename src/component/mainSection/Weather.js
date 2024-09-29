@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import weatherDescKo from './util/weatherDescKo';
+import styles from './css/Weather.module.css';
 
 function Weather() {
   const API_KEY = process.env.REACT_APP_API_KEY;
@@ -14,17 +15,19 @@ function Weather() {
         );
 
         const cityName = res.data.name;
+        //날씨 한글 설명
         const weatherId = res.data.weather[0].id;
         const weatherKo = weatherDescKo[weatherId];
+        //날씨 아이콘 가져오기
         const weatherIcon = res.data.weather[0].icon;
         const weatherIconAdrs = `http://openweathermap.org/img/wn/${weatherIcon}@2x.png`;
+
         const temp = Math.round(res.data.main.temp);
 
         setWeather({
           description: weatherKo,
           name: cityName,
           temp: temp,
-          
           icon: weatherIconAdrs,
         });
       } catch (err) {
@@ -40,13 +43,13 @@ function Weather() {
   }, [API_KEY]);
 
   return (
-    <div>
+    <div className={styles.weatherSection}>
       {weather && (
         <div>
-          <h2>{weather.name}</h2>
-          <p>{weather.description}</p>
-          <p>{weather.temp}°C</p>
-          <img src={weather.icon} alt="weather icon" />
+          <div className={styles.icon}><img src={weather.icon} alt="weather icon" /></div>
+          <p className={styles.temperture}>{weather.temp}°C</p>
+          <p className={styles.weather}>{weather.description}</p>
+          <p className={styles.cityName}>{weather.name}</p>
         </div>
       )}
     </div>

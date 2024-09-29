@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { timeFormat } from "./util/DateUtil";
+import style from "./css/Clock.module.css";
 
 const Clock = () => {
     const [date, setDate] = useState(new Date());
@@ -15,8 +16,8 @@ const Clock = () => {
     const { hour, minu, sec } = timeFormat(date);
 
     return (
-        <div>
-            <div className="clock">
+        <div className={style.clock}>
+            <div>
                 {hour}:{minu}:{sec}
             </div>
         </div>
