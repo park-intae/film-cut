@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import SearchBox from './../component/mainSection/SearchBox';
 import Clock from '../component/mainSection/Clock';
 import Today from "../component/mainSection/Today";
-import Memo from './../component/bottom/Memo/Memo';
+import Memo from '../component/bottom/Memo.js';
+import TodoList from "../component/bottom/TodoList.js";
+import GoogleAuthLogin from "../component/upperSide/GoogleAuthLogin";
 
 
 function Main() {
@@ -22,16 +24,22 @@ function Main() {
             ) : (
                 <div>
                     <div>
-                        upperSide
+                        <GoogleAuthLogin />
                     </div>
+                    <hr/>
                     <Clock />
+                    <hr/>
                     <Today />
+                    <hr/>
                     <SearchBox />
+                    <hr/>
                     <div>
                         <Memo />
+                        <hr/>
+                        <TodoList />
                     </div>
                 </div>
-        )}
+            )}
         </div>
     )
 }

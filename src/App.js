@@ -1,6 +1,7 @@
 import './App.css';
 import {createBrowserRouter, RouterProvider,} from "react-router-dom"
 import Main from './router/Main';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 function App() {
   const router = createBrowserRouter([
@@ -9,9 +10,13 @@ function App() {
       element: <Main/>
     }
   ])
+  const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_LOGIN_CLIENT_ID;
+  
   return (
-    <RouterProvider router={router}
-    />
+    <>
+    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}/>
+    <RouterProvider router={router}/>
+    </>
   );
 }
 

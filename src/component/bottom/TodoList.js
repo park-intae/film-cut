@@ -18,7 +18,7 @@ const TodoList = () => {
     };
 
     const handleDeletTodo = (index) => {
-        const updatedTodos = todos.tilter((_,i) => i !== index);
+        const updatedTodos = todos.filter((_,i) => i !== index);
         setTodos(updatedTodos);
     }
 

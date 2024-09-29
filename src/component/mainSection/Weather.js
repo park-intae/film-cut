@@ -6,8 +6,6 @@ function Weather() {
   const API_KEY = process.env.REACT_APP_API_KEY;
   const [weather, setWeather] = useState(null);
 
-  console.log("API Key:", API_KEY);
-
   useEffect(() => {
     const getWeather = async (lat, lon) => {
       try {

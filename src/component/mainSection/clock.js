@@ -16,7 +16,7 @@ const Clock = () => {
 
     return (
         <div>
-            <div>
+            <div className="clock">
                 {hour}:{minu}:{sec}
             </div>
         </div>
