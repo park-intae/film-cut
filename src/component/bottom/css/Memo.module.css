@@ -1,0 +1,19 @@
+.memoSection {
+    margin: auto;
+    width: max-content;
+}
+
+.memoSection > *{
+    width: max-content;
+}
+
+.memoInput {
+}
+
+.memoList > ul{
+    list-style-type: none;
+}
+
+.memoList .memoContent{
+    margin-right: 5px;
+}
