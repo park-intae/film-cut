@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import SearchBox from './../component/mainSection/SearchBox';
-import Today from "../component/mainSection/Today";
-import Memo from '../component/bottom/Memo.js';
-import TodoList from "../component/bottom/TodoList.js";
-import GoogleAuthLogin from "../component/upperSide/GoogleAuthLogin";
+import styles from './Main.module.css';
+import { SearchBox, Today } from './../component/mainSection';
+import { Memo, TodoList } from './../component/bottom';
+import { GoogleAuthLogin } from './../component/upperSide';
 
 
 function Main() {
@@ -27,8 +26,9 @@ function Main() {
                     </div>
                     <hr/>
                     <SearchBox />
-                    <hr/>
                     <Today />
+                    <button className={styles.circle}>'</button>
+                    <button></button>
                     <hr/>
                     <div>
                         <Memo />

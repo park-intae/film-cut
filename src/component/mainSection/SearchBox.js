@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from './css/SearchBox.module.css';
 
 const SearchBox = () => {
     const [query, setQuery] = useState('');
@@ -12,13 +13,16 @@ const SearchBox = () => {
     };
 
     return (
-        <form onSubmit={searchHandeler}>
-            <input
-                type='text'
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder='검색어를 입력해주세요'
-            />
+        <form className={styles.searchForm} onSubmit={searchHandeler}>
+            <div className={styles.box}>
+                <input
+                    className={styles.searchBox}
+                    type='text'
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder='검색어를 입력해주세요'
+                />
+            </div>
         </form>
     );
 };

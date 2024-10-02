@@ -33,26 +33,28 @@ const Memo = () => {
     return (
         <div className={styles.memoSection}>
             <div className={styles.memoInput}>
-                <h2>메모장</h2>
-                <textarea
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                    placeholder="노트 내용을 적어주세요"
-                    rows="1"
-                    cols="30"
-                />
-                <button onClick={addMemo}>메모 추가</button>
-            </div>
-            <div className={styles.memoList}>
-                <h2>메모 리스트</h2>
-                <ul>
-                    {memos.map((note) => (
-                        <li key={note.id}>
-                            <span className={styles.memoContent}>{note.content}</span>
-                            <button onClick={() => deleteMemo(note.id)}>메모 삭제</button>
-                        </li>
-                    ))}
-                </ul>
+                <h2>메모장</h2>{/* css 추가하면 나중에 지우셈 */}
+                <div className={styles.memoInputSection}>
+                    <textarea className={styles.inputBox}
+                        value={content}
+                        onChange={(e) => setContent(e.target.value)}
+                        placeholder="노트 내용을 적어주세요"
+                        rows="1"
+                        cols="30"
+                    />
+                    <button className={styles.inputButton} onClick={addMemo}>메모 추가</button>
+                </div>
+                <div className={styles.memoList}>
+                    <h2>메모 리스트</h2>
+                    <ul>
+                        {memos.map((note) => (
+                            <li key={note.id}>
+                                <span className={styles.memoContent}>{note.content}</span>
+                                <button onClick={() => deleteMemo(note.id)}>메모 삭제</button>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             </div>
         </div>
     );

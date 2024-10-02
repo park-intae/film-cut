@@ -1,0 +1,17 @@
+.todo{
+    border: solid 2px black;
+    margin: auto;
+    width: max-content;
+}
+.todo > *{
+    margin: auto;
+}
+
+.listUl{
+    list-style: none;
+    border: solid 1px black;
+}
+
+.todoList.completed{
+    text-decoration: line-through;
+}

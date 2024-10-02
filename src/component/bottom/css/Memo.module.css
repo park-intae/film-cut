@@ -1,6 +1,7 @@
 .memoSection {
     margin: auto;
     width: max-content;
+    border: solid 1px black;
 }
 
 .memoSection > *{
@@ -8,6 +9,26 @@
 }
 
 .memoInput {
+    border: solid 1px black;
+}
+
+.memoInputSection{
+    display: flex;
+    align-items: center;
+}
+.memoInputSection > *{
+    flex: 1;
+    height: 100%;
+}
+.inputBox{
+    flex-basis: 70%;
+}
+.inputButton{
+    flex-basis: 30%;
+}
+
+.memoList {
+    border-top: solid 1px black;
 }
 
 .memoList > ul{
