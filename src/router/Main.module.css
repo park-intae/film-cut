@@ -1,3 +1,12 @@
+.divFlex{
+    display: flex;
+}
 .circle{
-    border-radius: 100%;
+    margin: 0.5em;
+    width : 2em;
+    height: 2em;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

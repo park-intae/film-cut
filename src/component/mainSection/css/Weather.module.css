@@ -17,8 +17,9 @@
     margin-bottom: 3px;
 }
 .weather{
-    width: max-content;
+    width: 7em;
     margin: 3px auto;
+    text-align: center;
 }
 .cityName{
     width: max-content;
