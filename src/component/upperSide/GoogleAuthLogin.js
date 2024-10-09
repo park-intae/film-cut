@@ -10,6 +10,7 @@ const GoogleAuthLogin = () => {
                 onError={() => {
                     console.log("Login 실패");
                 }}
+                width={"300px"}
                 useOneTap
             />
         </>

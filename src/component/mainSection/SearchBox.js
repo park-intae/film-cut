@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styles from './css/SearchBox.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 const SearchBox = () => {
     const [query, setQuery] = useState('');
@@ -22,6 +24,7 @@ const SearchBox = () => {
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder='검색어를 입력해주세요'
                 />
+                <button className={styles.circle}><FontAwesomeIcon icon={faMagnifyingGlass} /></button>
             </div>
         </form>
     );

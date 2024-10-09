@@ -1,5 +1,34 @@
-.divFlex{
-    display: flex;
+.gridContainer {
+    display: grid;
+    grid-template-rows: 0.3fr 5fr 0.3fr;
+    grid-template-columns: 0.5fr 5fr 0.5fr;
+    height: 100vh;
+    grid-template-areas: 
+        "header header header"
+        ". main ."
+        ". button button";
+}
+
+.modalOverlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+.modal{
+    width: max-content;
+    margin-left: auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    z-index: 1010; /* 모달 내용이 배경 위에 위치하도록 설정 */
+    position: absolute; /* 모달을 중앙에 배치할 수 있도록 설정 */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* 중앙 정렬 */
 }
 .circle{
     margin: 0.5em;
@@ -8,5 +37,7 @@
     border-radius: 50%;
     display: flex;
     justify-content: center;
+
+
     align-items: center;
 }

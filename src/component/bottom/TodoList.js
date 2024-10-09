@@ -31,29 +31,27 @@ const TodoList = () => {
     }
 
     return (
-        <>
-            <div className={styles.todo}>
-                <h2>Todo List</h2>
-                <input
-                    type="text"
-                    value={newTodo}
-                    onChange={(e) => setNewTodo(e.target.value)}
-                    placeholder="새로운 할 일"
-                />
-                <button onClick={addTodo}>추가</button>
-                <ul className={styles.listUl}>
-                    {todos.map((todo, index) => (
-                        <li key={index}>
-                            <span className={`${styles.todoList} ${todo.completed ? '' : styles.completed}`}>{todo.text}</span>
-                            <button onClick={() => completedTodo(index)}>
-                                {todo.completed ? "Undo" : "complete"}
-                            </button>
-                            <button onClick={() => deletTodo(index)}>삭제</button>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </>
+        <div className={styles.todo}>
+            <h2>Todo List</h2>
+            <input
+                type="text"
+                value={newTodo}
+                onChange={(e) => setNewTodo(e.target.value)}
+                placeholder="새로운 할 일"
+            />
+            <button onClick={addTodo}>추가</button>
+            <ul className={styles.listUl}>
+                {todos.map((todo, index) => (
+                    <li key={index}>
+                        <span className={`${styles.todoList} ${todo.completed ? '' : styles.completed}`}>{todo.text}</span>
+                        <button onClick={() => completedTodo(index)}>
+                            {todo.completed ? "Undo" : "complete"}
+                        </button>
+                        <button onClick={() => deletTodo(index)}>삭제</button>
+                    </li>
+                ))}
+            </ul>
+        </div>
     )
 }
 

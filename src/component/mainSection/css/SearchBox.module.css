@@ -2,9 +2,27 @@
     height: max-content;
 }
 .box{
+    margin: auto;
+    width: 60%;
+    background-color: white;
+    border: solid 2px rgb(49, 49, 49);
+    border-radius: 50px;
     margin-bottom: 2%;
+    display: flex;
 }
 .searchBox{
     width: 35em;
-    margin: auto;
+    margin-left: 1.5em;
+    border: none;
+}
+.circle{
+    margin: 0.5em;
+    width : 2em;
+    height: 2em;
+    border-radius: 50%;
+    border: none;
+    background-color: unset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
