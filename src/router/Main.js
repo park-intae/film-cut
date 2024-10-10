@@ -4,6 +4,8 @@ import { Memo, TodoList } from './../component/bottom';
 import { useGoogleLogin, googleLogout } from '@react-oauth/google';
 import styles from './Main.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import SearchBox from './../component/mainSection/SearchBox';
+
 import {
     faRightFromBracket,
     faRightToBracket,
@@ -15,11 +17,13 @@ import {
 const gridCenter = {
     display: 'grid',
     placeItems: 'center',
+    gridTemplateRows: '0.5fr 3fr',
 };
 
-const gridEnd = {
+const flexEnd = {
     display: 'flex',
     justifyContent: 'flex-end',
+    alignItems: 'center',
 };
 
 function Main() {
@@ -101,7 +105,7 @@ function Main() {
                 ) : (
                     <>
                         {/* Header */}
-                        <div style={{ gridArea: 'header', display: 'flex', justifyContent: 'flex-end' }}>
+                        <div style={{ gridArea: 'header', ...flexEnd }}>
                             <button className={styles.circle} onClick={loggedIn ? handleLogout : handleLogin}>
                                 {loggedIn ? <FontAwesomeIcon icon={faRightFromBracket} /> : <FontAwesomeIcon icon={faRightToBracket} />}
                             </button>
@@ -109,11 +113,12 @@ function Main() {
 
                         {/* 메인 콘텐츠 */}
                         <div style={{ gridArea: 'main', ...gridCenter }}>
+                            <SearchBox />
                             <Today />
                         </div>
 
                         {/* 버튼 부분 */}
-                        <div style={{ gridArea: 'button', ...gridEnd }}>
+                        <div style={{ gridArea: 'button', ...flexEnd }}>
                             <button className={styles.circle} onClick={() => modalOpen('memo')}><FontAwesomeIcon icon={faPen} /></button>
                             <button className={styles.circle} onClick={() => modalOpen('todo')}><FontAwesomeIcon icon={faBars} /></button>
                         </div>

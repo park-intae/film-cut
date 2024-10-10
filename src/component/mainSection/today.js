@@ -3,7 +3,7 @@ import { dateFormat } from "./util/DateUtil";
 import Weather from "./Weather";
 import Clock from './Clock';
 import styles from './css/Today.module.css';
-import SearchBox from './SearchBox'
+
 const Today = () => {
     const [date, setDate] = useState(new Date());
 
@@ -19,12 +19,11 @@ const Today = () => {
 
     return (
         <div className={styles.mainSection}>
-            <SearchBox />
             <div className={styles.date}>
                 {year}년 {month}월 {day}일
             </div>
             <Clock/>
-            <div style={{marginBottom : '2em'}}>
+            <div>
                 <Weather/>
             </div>
         </div>

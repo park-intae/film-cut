@@ -45,7 +45,7 @@ function Weather() {
   return (
     <div className={styles.weatherSection}>
       {weather && (
-        <div>
+        <div style={{marginTop: '2em'}}>
           <div className={styles.icon}><img src={weather.icon} alt="weather icon" /></div>
           <p className={styles.temperture}>{weather.temp}°C</p>
           <p className={styles.weather}>{weather.description}</p>
