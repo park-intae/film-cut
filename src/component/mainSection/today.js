@@ -19,7 +19,7 @@ const Today = () => {
 
     return (
         <div className={styles.mainSection}>
-            <div className={styles.date}>
+            <div className={`${styles.date} juaRegular`}>
                 {year}년 {month}월 {day}일
             </div>
             <Clock/>

@@ -16,7 +16,7 @@ const Clock = () => {
     const { hour, minu, sec } = timeFormat(date);
 
     return (
-        <div className={style.clock}>
+        <div className={`${style.clock} juaRegular`}>
             <div>
                 {hour}:{minu}:{sec}
             </div>

@@ -1,14 +1,15 @@
 .mainSection{
     height: 100%;
     margin: auto;
-    background-color: aqua;
-    border: solid black 2px;
-    width: 65%;
+    background-color: rgb(80, 80, 80);
+    border-radius: 1cm;
+    width: 68%;
+    color: white;
 }
 
 .date{
     margin: auto;
-    margin-bottom: -0.8em;
+    margin-bottom: -0.5em;
     width: max-content;
-    font: 3em sans-serif;
+    font-size: 3em;
 }

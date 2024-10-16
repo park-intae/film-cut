@@ -4,7 +4,8 @@
     width: 30%;
     height: 15em;
     border-radius: 10px;
-    background-color: dimgray;
+    background-color: rgb(216, 216, 216);
+    color: black;
 }
 .icon{
     width: max-content;
