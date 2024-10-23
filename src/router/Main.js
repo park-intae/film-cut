@@ -126,7 +126,13 @@ function Main() {
             {/* Header */}
             <div style={{ gridArea: "header", ...flexEnd }}>
               <button
-                className={styles.circle}
+                  className={`${
+                    loggedIn
+                      ? hover
+                        ? styles.circle
+                        :styles.profileContainer
+                      : styles.circle
+                  }`}
                 onClick={loggedIn ? handleLogout : handleLogin}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
@@ -142,8 +148,7 @@ function Main() {
                           alt="Profile"
                           className={styles.circle}
                         />
-                        {/* <span>{userInfo.name}</span> */}
-                        {/* 이 부분 구글 console로 값 제대로 들어있는지 확인 후 수정하기 */}
+                        <span className={styles.nickname}>{userInfo.name}</span>
                       </>
                     )
                   )

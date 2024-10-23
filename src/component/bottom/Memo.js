@@ -32,25 +32,33 @@ const Memo = () => {
 
     return (
         <div className={styles.memoSection}>
-            <div className={styles.memoInput}>
-                <h2>메모장</h2>{/* css 추가하면 나중에 지우셈 */}
-                <div className={styles.memoInputSection}>
-                    <textarea className={styles.inputBox}
+            <div className={`${styles.memoInput} container mt-3`}>
+                <div className={`${styles.memoInputSection} input-group mb-3`}>
+                    <textarea className={`${styles.inputBox} form-control w-70`}
+                        onKeyDown={(e) => {
+                            if(e.key === 'Enter' && !e.shiftKey) {
+                                e.preventDefault();
+                                addMemo();
+                            }
+                        }}
+                        type="text"
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
-                        placeholder="노트 내용을 적어주세요"
+                        placeholder="Memo"
                         rows="1"
                         cols="30"
                     />
-                    <button className={styles.inputButton} onClick={addMemo}>메모 추가</button>
+                    <button className={`${styles.inputButton} btn btn-outline-primary`} 
+                    // style={{width:'10%'}} 
+                    onClick={addMemo}>메모추가</button>
                 </div>
-                <div className={styles.memoList}>
-                    <h2>메모 리스트</h2>
-                    <ul>
+                <div className={`${styles.memoList} mb-3`}>
+                    <div className="container-sm">메모 리스트</div>
+                    <ul className="list-group">
                         {memos.map((note) => (
-                            <li key={note.id}>
-                                <span className={styles.memoContent}>{note.content}</span>
-                                <button onClick={() => deleteMemo(note.id)}>메모 삭제</button>
+                            <li className="list-group-item" style={{display:'flex'}} key={note.id}>
+                                <span className={`${styles.memoContent}`} style={{flexBasis:'70%', flexGrow:'2', display: 'flex', alignItems: 'center'}}>{note.content}</span>
+                                <button className="btn btn-danger" style={{flexBasis:'20%', flexGrow:'0'}} onClick={() => deleteMemo(note.id)}>메모 삭제</button>
                             </li>
                         ))}
                     </ul>

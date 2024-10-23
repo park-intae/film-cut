@@ -2,14 +2,12 @@
     border: solid 2px black;
     margin: auto;
     width: max-content;
-}
-.todo > *{
-    margin: auto;
+    border-radius: 5px;
 }
 
 .listUl{
     list-style: none;
-    border: solid 1px black;
+    padding: 0;
 }
 
 .todoList.completed{
