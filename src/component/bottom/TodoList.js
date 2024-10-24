@@ -36,6 +36,7 @@ const TodoList = () => {
       <h2>Todo List</h2>
       <div className="input-group">
         <input
+          className="form-control w-70"
           style={{ borderRadius: "5px 0 0 5px" }}
           type="text"
           value={newTodo}
@@ -48,21 +49,35 @@ const TodoList = () => {
       </div>
       <ul className={styles.listUl}>
         {todos.map((todo, index) => (
-          <li className="input-group-text" key={index}>
+          <li className={`${styles.listItem} input-group-text`} key={index}>
             <input
               className="form-check-input"
               type="checkbox"
               checked={todo.completed}
               onChange={() => completedTodo(index)}
             />
-            <span
-              className={`${styles.todoList} ${
-                todo.completed ? styles.completed : "" //취소선 표시여부
-              }`}
+            <div className={styles.todoList}>
+              <span
+                className={`${
+                  todo.completed ? styles.completed : "" //취소선 표시여부
+                }`}
+                style={{
+                  flexBasis: "70%",
+                  flexGrow: "2",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                {todo.text}
+              </span>
+            </div>
+            <button
+              className="btn btn-danger"
+              style={{ flexBasis: "10%", flexGrow: "0" }}
+              onClick={() => deletTodo(index)}
             >
-              {todo.text}
-            </span>
-            <button className="btn btn-danger" onClick={() => deletTodo(index)}>삭제</button>
+              삭제
+            </button>
             {/* Memo.js 참고해서 ul내부 css 조정 */}
           </li>
         ))}
