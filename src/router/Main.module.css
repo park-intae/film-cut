@@ -17,6 +17,11 @@
   align-items: center;
 }
 
+/* .profileButton:hover{
+  animation:
+} 
+  요거 호버 에니메이션 넣어서 버튼 작동하도록 수정해야함*/
+
 .profileContainer {
   border: 1px solid black;
   display: flex;
@@ -24,14 +29,14 @@
   background-color: white; /* 프로필 배경 */
   border-radius: 20px; /* 둥근 모서리 적용 */
   width: auto; /* 자동 크기 조절 */
-  height: max-content;
+  height: 2.1em;
+  transition: width 0.3s ease;
 }
 
 .nickname {
   font-size: 15px;
   color: black;
   margin-left: 0.2em;
-  margin-right: 0.5em;
 }
 
 .modalOverlay {
@@ -59,6 +64,15 @@
 .circle {
   width: 2em; /* 이미지 크기 설정 */
   height: 2em;
-  border-radius: 50%;
+  border-radius: 50px;
   overflow: hidden; /* 이미지가 원형으로 보이도록 설정 */
+  transition: width 0.3s ease;
+}
+
+.circle:hover {
+  width: 2em; /* hover 시 폭 확대 */
+}
+
+.profileContainer:hover {
+  width: 8em; /* hover 시 폭 확대 */
 }

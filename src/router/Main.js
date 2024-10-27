@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
 import { Today } from "./../component/mainSection";
 import { Memo, TodoList } from "./../component/bottom";
-import { useGoogleLogin, googleLogout } from "@react-oauth/google";
 import styles from "./Main.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SearchBox from "./../component/mainSection/SearchBox";
+import Login from './../component/upperSide/Login';
 
 import {
-  faRightFromBracket,
-  faRightToBracket,
   faPen,
   faBars,
 } from "@fortawesome/free-solid-svg-icons";
@@ -30,10 +28,9 @@ function Main() {
   const [loading, setLoading] = useState(true);
   const [modalActive, setModalActive] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
   const [memo, setMemo] = useState("");
   const [todos, setTodos] = useState([]);
-  const [userInfo, setUserInfo] = useState(null);
-  const [hover, setHover] = useState(false);
 
   useEffect(() => {
     const userData = localStorage.getItem("user");
@@ -53,6 +50,8 @@ function Main() {
   const updateLocalStorage = (key, value) => {
     if (loggedIn) {
       localStorage.setItem(key, JSON.stringify(value));
+    } else {
+      localStorage.setItem(`${key}_disabled`, JSON.stringify(value));
     }
   };
 
@@ -67,29 +66,6 @@ function Main() {
     updateLocalStorage("todos", updatedTodos);
   };
 
-  const login = useGoogleLogin({
-    onSuccess: (response) => {
-      fetch(`https://www.googleapis.com/oauth2/v3/userinfo`, {
-        headers: {
-          Authorization: `Bearer ${response.access_token}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log("Login Successful:", data);
-          setUserInfo(data);
-          localStorage.setItem("user", JSON.stringify(data));
-          setLoggedIn(true);
-        })
-        .catch((err) => {
-          console.log("Failed to fetch user info:", err);
-        });
-    },
-    onError: () => {
-      console.log("Login Failed");
-    },
-  });
-
   const modalOpen = (modal) => {
     setModalActive(modal);
     console.log("modal is opened");
@@ -102,18 +78,6 @@ function Main() {
     }
   };
 
-  const handleLogin = () => login();
-  const handleLogout = () => {
-    setLoggedIn(false);
-    googleLogout();
-    localStorage.removeItem("user");
-    setUserInfo(null);
-    console.log("logged out");
-  };
-
-  const handleMouseEnter = () => setHover(true);
-  const handleMouseLeave = () => setHover(false);
-
   return (
     <>
       <div className={styles.gridContainer}>
@@ -125,37 +89,14 @@ function Main() {
           <>
             {/* Header */}
             <div style={{ gridArea: "header", ...flexEnd }}>
-              <button
-                  className={`${
-                    loggedIn
-                      ? hover
-                        ? styles.circle
-                        :styles.profileContainer
-                      : styles.circle
-                  }`}
-                onClick={loggedIn ? handleLogout : handleLogin}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-              >
-                {loggedIn ? (
-                  hover ? (
-                    <FontAwesomeIcon icon={faRightFromBracket} />
-                  ) : (
-                    userInfo && (
-                      <>
-                        <img
-                          src={userInfo.picture}
-                          alt="Profile"
-                          className={styles.circle}
-                        />
-                        <span className={styles.nickname}>{userInfo.name}</span>
-                      </>
-                    )
-                  )
-                ) : (
-                  <FontAwesomeIcon icon={faRightToBracket} />
-                )}
-              </button>
+              <div style={{ width: "8em", ...flexEnd }}>
+              <Login
+                  loggedIn={loggedIn}
+                  setLoggedIn={setLoggedIn}
+                  userInfo={userInfo}
+                  setUserInfo={setUserInfo}
+                />
+              </div>
             </div>
 
             {/* 메인 콘텐츠 */}
