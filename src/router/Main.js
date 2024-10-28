@@ -4,12 +4,9 @@ import { Memo, TodoList } from "./../component/bottom";
 import styles from "./Main.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SearchBox from "./../component/mainSection/SearchBox";
-import Login from './../component/upperSide/Login';
+import Login from "./../component/upperSide/Login";
 
-import {
-  faPen,
-  faBars,
-} from "@fortawesome/free-solid-svg-icons";
+import { faPen, faBars } from "@fortawesome/free-solid-svg-icons";
 
 // grid 스타일
 const gridCenter = {
@@ -35,11 +32,19 @@ function Main() {
   useEffect(() => {
     const userData = localStorage.getItem("user");
     if (userData) {
+      // 로그인된 상태
       setLoggedIn(true);
-      const savedMemo = localStorage.getItem("memo");
-      if (savedMemo) setMemo(savedMemo);
+      const savedMemo = localStorage.getItem("memo_logged_in");
+      if (savedMemo) setMemo(JSON.parse(savedMemo));
 
-      const savedTodos = localStorage.getItem("todos");
+      const savedTodos = localStorage.getItem("todos_logged_in");
+      if (savedTodos) setTodos(JSON.parse(savedTodos));
+    } else {
+      // 로그아웃된 상태
+      const savedMemo = localStorage.getItem("memo_logged_out");
+      if (savedMemo) setMemo(JSON.parse(savedMemo));
+
+      const savedTodos = localStorage.getItem("todos_logged_out");
       if (savedTodos) setTodos(JSON.parse(savedTodos));
     }
 
@@ -48,22 +53,21 @@ function Main() {
   }, []);
 
   const updateLocalStorage = (key, value) => {
-    if (loggedIn) {
-      localStorage.setItem(key, JSON.stringify(value));
-    } else {
-      localStorage.setItem(`${key}_disabled`, JSON.stringify(value));
-    }
+    const storageKey = loggedIn ? `${key}_logged_in` : `${key}_logged_out`;
+    localStorage.setItem(storageKey, JSON.stringify(value));
   };
 
   const addMemo = (newMemo) => {
     setMemo(newMemo);
     updateLocalStorage("memo", newMemo);
+    console.log("updateLoclaStorage 실행");
   };
 
   const addTodo = (newTodo) => {
     const updatedTodos = [...todos, newTodo];
     setTodos(updatedTodos);
     updateLocalStorage("todos", updatedTodos);
+    console.log("updateLoclaStorage 실행");
   };
 
   const modalOpen = (modal) => {
@@ -90,7 +94,7 @@ function Main() {
             {/* Header */}
             <div style={{ gridArea: "header", ...flexEnd }}>
               <div style={{ width: "8em", ...flexEnd }}>
-              <Login
+                <Login
                   loggedIn={loggedIn}
                   setLoggedIn={setLoggedIn}
                   userInfo={userInfo}

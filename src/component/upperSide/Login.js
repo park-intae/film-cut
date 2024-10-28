@@ -75,6 +75,7 @@ function Login({ setLoggedIn, setUserInfo }) {
             <>
               <img
                 src={userInfo.picture}
+                alt="Profile"
                 className={styles.circle}
                 style={{ width: "1.8em", height: "1.8em", overflow: "hidden" }}
               />
