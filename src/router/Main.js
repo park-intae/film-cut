@@ -34,14 +34,14 @@ function Main() {
     if (userData) {
       // 로그인된 상태
       setLoggedIn(true);
-      const savedMemo = localStorage.getItem("memo_logged_in");
+      const savedMemo = localStorage.getItem("memos_logged_in");
       if (savedMemo) setMemo(JSON.parse(savedMemo));
 
       const savedTodos = localStorage.getItem("todos_logged_in");
       if (savedTodos) setTodos(JSON.parse(savedTodos));
     } else {
       // 로그아웃된 상태
-      const savedMemo = localStorage.getItem("memo_logged_out");
+      const savedMemo = localStorage.getItem("memos_logged_out");
       if (savedMemo) setMemo(JSON.parse(savedMemo));
 
       const savedTodos = localStorage.getItem("todos_logged_out");
@@ -59,7 +59,7 @@ function Main() {
 
   const addMemo = (newMemo) => {
     setMemo(newMemo);
-    updateLocalStorage("memo", newMemo);
+    updateLocalStorage("memos", newMemo);
     console.log("updateLoclaStorage 실행");
   };
 

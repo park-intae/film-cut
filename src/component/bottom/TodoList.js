@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import styles from "./css/TodoList.module.css";
 
-const TodoList = () => {
+const TodoList = ({loggedIn, AddTodo}) => {
+  const storageKey = loggedIn ? 'todos_logged_in' : 'todos_logged_out';
   const [todos, setTodos] = useState(() => {
     const savedTodos = localStorage.getItem("todos");
     return savedTodos ? JSON.parse(savedTodos) : [];
@@ -9,13 +10,14 @@ const TodoList = () => {
   const [newTodo, setNewTodo] = useState("");
 
   useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]);
+    localStorage.setItem(storageKey, JSON.stringify(todos));
+  }, [todos, storageKey]);
 
-  const addTodo = () => {
+  const addTodoHandler = () => {
     if (newTodo.trim() !== "") {
       setTodos([...todos, { text: newTodo, completed: false }]);
       setNewTodo("");
+      AddTodo(newTodo)
     }
   };
 
@@ -43,7 +45,7 @@ const TodoList = () => {
           onChange={(e) => setNewTodo(e.target.value)}
           placeholder="새로운 할 일"
         />
-        <button className="btn btn-outline-primary" onClick={addTodo}>
+        <button className="btn btn-outline-primary" onClick={addTodoHandler}>
           추가
         </button>
       </div>

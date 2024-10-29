@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import styles from "./css/Memo.module.css";
 
-const Memo = () => {
+const Memo = ({ loggedIn, AddMemo}) => {
+    const storageKey = loggedIn ? 'memos_logged_in' : 'memos_logged_out';
     const [content, setContent] = useState('');
     const [memos, setMemos] = useState(() => {
         // 초기값으로 로컬스토리지에서 불러오기
@@ -9,13 +10,11 @@ const Memo = () => {
         return savedMemos ? JSON.parse(savedMemos) : [];
     });
 
-    // 메모 수정/저장
     useEffect(() => {
-        localStorage.setItem('memos', JSON.stringify(memos));
-    }, [memos]);
+        localStorage.setItem(storageKey, JSON.stringify(memos));
+    }, [memos, storageKey]);
 
-    // 메모 추가
-    const addMemo = () => {
+    const addMemoHandler = () => {
         if (content.trim() === '') return;
         const newMemo = {
             id: Date.now(),
@@ -23,9 +22,9 @@ const Memo = () => {
         };
         setMemos((prevMemos) => [...prevMemos, newMemo]);
         setContent('');
+        AddMemo(newMemo);
     }
 
-    // 메모 삭제
     const deleteMemo = (id) => {
         setMemos((prevMemos) => prevMemos.filter((note) => note.id !== id));
     };
@@ -38,7 +37,7 @@ const Memo = () => {
                         onKeyDown={(e) => {
                             if(e.key === 'Enter' && !e.shiftKey) {
                                 e.preventDefault();
-                                addMemo();
+                                addMemoHandler();
                             }
                         }}
                         type="text"
@@ -50,7 +49,7 @@ const Memo = () => {
                     />
                     <button className={`${styles.inputButton} btn btn-outline-primary`} 
                     // style={{width:'10%'}} 
-                    onClick={addMemo}>메모추가</button>
+                    onClick={addMemoHandler}>메모추가</button>
                 </div>
                 <div className={`${styles.memoList} mb-3`}>
                     <div className="container-sm">메모 리스트</div>
