@@ -8,7 +8,6 @@ import Login from "./../component/upperSide/Login";
 
 import { faPen, faBars } from "@fortawesome/free-solid-svg-icons";
 
-// grid 스타일
 const gridCenter = {
   display: "grid",
   placeItems: "center",

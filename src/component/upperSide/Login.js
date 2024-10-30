@@ -67,7 +67,7 @@ function Login({ setLoggedIn, setUserInfo }) {
       }`}
       onClick={userInfo ? handleLogout : handleLogin}
       onMouseEnter={handleMouseEnter}
-      onMouseLeaver={handleMoseLeave}
+      onMouseLeave={handleMoseLeave}
     >
       {userInfo ? (
         hover ? (

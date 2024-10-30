@@ -5,8 +5,7 @@ const Memo = ({ loggedIn, AddMemo}) => {
     const storageKey = loggedIn ? 'memos_logged_in' : 'memos_logged_out';
     const [content, setContent] = useState('');
     const [memos, setMemos] = useState(() => {
-        // 초기값으로 로컬스토리지에서 불러오기
-        const savedMemos = localStorage.getItem('memos');
+        const savedMemos = localStorage.getItem(storageKey);
         return savedMemos ? JSON.parse(savedMemos) : [];
     });
 
