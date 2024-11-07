@@ -1,36 +1,50 @@
 import { useEffect, useState } from "react";
 import styles from "./css/TodoList.module.css";
 
-const TodoList = ({loggedIn, AddTodo}) => {
-  const storageKey = loggedIn ? 'todos_logged_in' : 'todos_logged_out';
+const TodoList = ({ loggedIn, AddTodo, updateLocalStorage }) => {
+  // const storageKey = loggedIn ? "todos_logged_in" : "todos_logged_out";
+  // const [todos, setTodos] = useState(() => {
+  //   const savedTodos = localStorage.getItem(storageKey);
+  //   return savedTodos ? JSON.parse(savedTodos) : [];
+  // });
+  // const [newTodo, setNewTodo] = useState("");
+
+  // useEffect(() => {
+  //   localStorage.setItem(storageKey, JSON.stringify(todos));
+  // }, [todos, storageKey]);
+  const storageKey = loggedIn ? "todos_logged_in" : "todos_logged_out";
   const [todos, setTodos] = useState(() => {
-    const savedTodos = localStorage.getItem("todos");
-    return savedTodos ? JSON.parse(savedTodos) : [];
+    const savedMemos = localStorage.getItem(storageKey);
+    return savedMemos ? JSON.parse(savedMemos) : [];
   });
-  const [newTodo, setNewTodo] = useState("");
+  const [content, setContent] = useState("");
 
   useEffect(() => {
     localStorage.setItem(storageKey, JSON.stringify(todos));
   }, [todos, storageKey]);
 
   const addTodoHandler = () => {
-    if (newTodo.trim() !== "") {
-      setTodos([...todos, { text: newTodo, completed: false }]);
-      setNewTodo("");
-      AddTodo(newTodo)
-    }
+    if (content.trim() === "") return;
+    const updatedTodo = {
+      id: Date.now(),
+      content,
+      completed: false,
+    };
+    setTodos((prevTodos) => [...prevTodos, updatedTodo]);
+    AddTodo(updatedTodo);
+    setContent("");
   };
 
-  const completedTodo = (index) => {
+  const completedTodo = (id) => {
     const updatedTodos = todos.map((todo, i) =>
-      i === index ? { ...todo, completed: !todo.completed } : todo
+      i === id ? { ...todo, completed: !todo.completed } : todo
     );
     setTodos(updatedTodos);
+    updateLocalStorage("todos", updatedTodos);
   };
 
-  const deletTodo = (index) => {
-    const updatedTodos = todos.filter((_, i) => i !== index);
-    setTodos(updatedTodos);
+  const deleteTodo = (id) => {
+    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
   };
 
   return (
@@ -41,8 +55,8 @@ const TodoList = ({loggedIn, AddTodo}) => {
           className="form-control w-70"
           style={{ borderRadius: "5px 0 0 5px" }}
           type="text"
-          value={newTodo}
-          onChange={(e) => setNewTodo(e.target.value)}
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
           placeholder="새로운 할 일"
         />
         <button className="btn btn-outline-primary" onClick={addTodoHandler}>
@@ -50,13 +64,13 @@ const TodoList = ({loggedIn, AddTodo}) => {
         </button>
       </div>
       <ul className={styles.listUl}>
-        {todos.map((todo, index) => (
-          <li className={`${styles.listItem} input-group-text`} key={index}>
+        {todos.map((todo, id) => (
+          <li className={`${styles.listItem} input-group-text`} key={id}>
             <input
               className="form-check-input"
               type="checkbox"
               checked={todo.completed}
-              onChange={() => completedTodo(index)}
+              onChange={() => completedTodo(id)}
             />
             <div className={styles.todoList}>
               <span
@@ -70,13 +84,13 @@ const TodoList = ({loggedIn, AddTodo}) => {
                   alignItems: "center",
                 }}
               >
-                {todo.text}
+                {todo.content}
               </span>
             </div>
             <button
               className="btn btn-danger"
               style={{ flexBasis: "10%", flexGrow: "0" }}
-              onClick={() => deletTodo(index)}
+              onClick={() => deleteTodo(todo.id)}
             >
               삭제
             </button>

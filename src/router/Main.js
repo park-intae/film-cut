@@ -63,11 +63,10 @@ function Main() {
   };
 
   const addTodo = (newTodo) => {
-    const updatedTodos = [...todos, newTodo];
-    setTodos(updatedTodos);
-    updateLocalStorage("todos", updatedTodos);
+    setTodos(newTodo);
+    updateLocalStorage("todos", newTodo);
     console.log("updateLoclaStorage 실행");
-  };
+  }
 
   const modalOpen = (modal) => {
     setModalActive(modal);
@@ -137,7 +136,12 @@ function Main() {
             {modalActive === "memo" ? (
               <Memo memo={memo} AddMemo={addMemo} loggedIn={loggedIn} />
             ) : (
-              <TodoList todos={todos} AddTodo={addTodo} />
+              <TodoList
+                todos={todos}
+                loggedIn={loggedIn}
+                AddTodo={addTodo}
+                updateLocalStorage={updateLocalStorage}
+              />
             )}
           </div>
         </div>
